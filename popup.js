@@ -155,7 +155,7 @@ document.getElementById('extractText').addEventListener('click', async () => {
     const select1 = document.getElementById('language');
     const select2 = document.getElementById('option');
     
-    const language = select1.options[select1.selectedIndex].value;
+    var language = select1.options[select1.selectedIndex].value;
     var option = select2.options[select2.selectedIndex].value;
     
     
@@ -188,10 +188,11 @@ document.getElementById('extractText').addEventListener('click', async () => {
     api.tabs.query(queryOptions, (tabs) => {
         if (tabs.length > 0) {
             const activeTabId = tabs[0].id;
-            const message = { type: 'getContent', content: 'Hello from the extension!' };
+            const message = { type: 'getContent', content: 'TLDR asking ...' };
+            console.log("Before sending to get content");
             sendMessageWithResponse(activeTabId, message)
             .then((response) => {
-                
+                console.log("Got content");
                 if(response.content === ''){
                     setSummaryText('Page is unreadable! Sorry')
                 }else{
@@ -200,6 +201,8 @@ document.getElementById('extractText').addEventListener('click', async () => {
                     
                     let endpoint, requestBody, recent;
                     
+                    language = " in " + language + " language. ";
+                    console.log(language)
                     switch (model) {
                         case "gpt-4":
                         case "gpt-4-0314":
@@ -210,7 +213,7 @@ document.getElementById('extractText').addEventListener('click', async () => {
                             endpoint = "https://api.openai.com/v1/chat/completions";
                             requestBody = {
                                 "model": model,
-                                "messages": [{"role": "user", "content": " " + option + language + getLimitedWords(pageContent, 950)}],
+                                "messages": [{"role": "user", "content": " " + option + language + " the following " + getLimitedWords(pageContent, 950)}],
                                 "temperature": temperature,
                                 
                             };
@@ -228,7 +231,7 @@ document.getElementById('extractText').addEventListener('click', async () => {
                             endpoint = "https://api.openai.com/v1/completions";
                             requestBody = {
                                 "model": model,
-                                "prompt": option + language + getLimitedWords(pageContent, 900),
+                                "prompt": language + option + " the following " + getLimitedWords(pageContent, 950),
                                 "temperature": temperature,
                                 "n" : 1 ,
                                 "stop": "\n"
