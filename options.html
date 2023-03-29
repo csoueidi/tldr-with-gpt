@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+            <title>Edit API Key and Dropdown Options</title>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        max-width: 800px;
+                        margin: 0 auto;
+                        padding: 20px;
+                    }
+                    h1 {
+                        text-align: center;
+                        margin-bottom: 30px;
+                    }
+                    
+                    .section-title {
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                    }
+                    
+                    .field {
+                        margin-bottom: 15px;
+                    }
+                    
+                    .button {
+                        cursor: pointer;
+                    }
+                </style>
+                <script type="module" src="options.js"></script>
+    </head>
+    <body>
+        <h1 class="title">Edit Settings for TLDR</h1>
+        <div class="box">
+            <h2 class="subtitle is-4 section-title">API</h2>
+            <p>As this is a free browser extension, you need to provide your own API key. Your key will remain in your browser's storage. Get your API key from <a href="https://platform.openai.com/account/api-keys" target="_blank">https://platform.openai.com/account/api-keys</a></p>
+            <br>
+            <form id="apiKeyForm">
+                <div class="field">
+                    <label class="label" for="apiKey">API Key (required):
+                        
+                        
+                        <div class="control">
+                            <input class="input" type="text" id="apiKey" name="apiKey">
+                        </div>
+                </div>
+                <button class="button is-primary is-small" type="submit">Save API Key</button>
+            </form>
+        </div>
+        
+        
+        <div class="box">
+            <h2 class="subtitle is-4 section-title">Summary Modes</h2>
+            <p>By modifying the prompts or adding new ones, you can change how GPT responds to your requests.
+            This can affect the summary or output you receive from GPT, as it uses the prompts to generate its response.
+            Experiment with different prompts to fine-tune the output to your needs. Checkout the documentation for text completion  <a href="https://platform.openai.com/docs/guides/completion/introduction" target="_blank">https://platform.openai.com/docs/guides/completion/introduction</a>.
+            </p>
+            <br>
+            <label class="label"  >Your Modes</label>
+            <div class="select">
+                <select id="optionsDropdown"  >
+                    <!-- Dropdown options will be populated here -->
+                </select>
+            </div>
+            <br>  <br>
+            <form id="dropdownOptionsForm">
+                <div class="field">
+                    <label class="label" for="optionValue">Name</label>
+                    <div class="control">
+                        <input class="input" type="text" id="optionValue" name="optionValue">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="optionText">Text</label>
+                    <div class="control">
+                        <input class="input" type="text" id="optionText" name="optionText">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="optionDataField">Prompt</label>
+                    <div class="control">
+                        <input class="input" type="text" id="optionDataField" name="optionDataField">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="optionTemperature">Temperature</label>
+                    <div class="control">
+                        <input class="input" type="number" id="optionTemperature" name="optionTemperature" step="0.1" min="0" max="2" value="0">
+                    </div>
+                </div>
+                
+       
+                <button class="button is-primary is-small" type="submit">Add/Update Option</button>
+                
+                <button class="button is-danger is-small" type="button" id="deleteOption">Delete Option</button>
+                
+                <button class="button is-warning is-small" type="button" id="resetDropdown">Reset Dropdown</button>
+            </form>
+        </div>
+        
+        <div class="box">
+            <h2 class="subtitle is-4 section-title">Languages</h2>
+            <p>Modify the prompts by adding new ones or changing what you are asking GPT.</p>
+            <br>
+            <label class="label"  >Presets</label>
+            <div class="select">
+                <select id="languagesDropdown" class="select">
+                    
+                </select>
+            </div>  <br>
+            <br>
+            <form id="languageForm">
+                <div class="field">
+                    <label class="label" for="languageValue">Name</label>
+                    <div class="control">
+                        <input class="input" type="text" id="languageValue" required>
+                    </div>
+                </div>
+                <div class="field">
+                    
+                    <label class="label" for="languageText">Language</label>
+                    <div class="control">
+                        <input class="input" type="text" id="languageText" required>
+                    </div>
+                </div>
+                <button class="button is-primary is-small" type="submit">Add/Update Language</button>
+                
+                <button class="button is-danger is-small" type="button" id="deleteLanguage">Delete Language</button>
+                
+                <button class="button is-warning is-small" type="button" id="resetLanguages">Reset Languages</button>
+            </form>
+        </div>
+        
+        <div class="box">
+            <h2 class="subtitle is-4 section-title">GPT Model</h2>
+            <p>Only OpenAI models with API endpoints ending in <i>v1/chat/completions</i> are supported at the moment.
+            For a list of supported models, see the <a href="https://platform.openai.com/docs/models/overview" target="_blank">OpenAI Models Overview</a> page.
+            By default, this extension uses the <i>gpt-3.5-turbo</i> model.
+            </p>
+            
+            <br>
+            <form id="gptForm">
+                <div class="field">
+                    <label class="label" for="gptInput">Model Name (required):
+                        <br>
+                        
+                        
+                        <div class="control">
+                            
+                            <input class="input" type="text" id="gptInput" name="gptInput">
+                        </div>
+                </div>
+                <button class="button is-primary is-small" type="submit">Save Model</button>
+            </form>
+        </div>
+        
+        
+    </body>
+</html>

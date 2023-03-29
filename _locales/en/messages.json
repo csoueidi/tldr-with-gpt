@@ -1,0 +1,10 @@
+{
+    "extension_name": {
+        "message": "TLDR with GPT",
+        "description": "TLDR with GPT"
+    },
+    "extension_description": {
+        "message": "A powerful and customizable extension that harnesses the power of AI to automatically summarize the readable content of any webpage.",
+        "description": "TL;DR with GPT is a versatile browser extension that employs OpenAI's ChatGPT to generate succinct and accurate summaries of any webpage's readable content. This user-friendly tool is fully customizable, allowing you to tailor the summaries to your preferences and needs."
+    }
+}
