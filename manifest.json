@@ -18,6 +18,7 @@
     "content_scripts": [{
         "js": ["readability.js", "content.js"  ],
         "matches": [ "<all_urls>" ]
+        
     }],
 
     "action": {
@@ -32,7 +33,11 @@
         }
     },
     
-     "options_page": "options.html",
+    "options_ui": {
+      "page": "options.html"
+    },
+    
+   
 
     "permissions": [ "activeTab"]
 }
