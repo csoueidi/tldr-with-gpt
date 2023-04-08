@@ -3,7 +3,7 @@ const api = typeof browser !== 'undefined' ? browser : chrome;
 const defaultDropdownOptions = [
     { value: 'tldr', text: 'TLDR', dataField: 'TLDR Summary for this article.', temperature: 0 },
     { value: 'normal', text: 'Normal', dataField: 'Summarize this article.', temperature: 0 },
-    { value: 'eli5', text: 'Like am 5', dataField: 'Explain briefly this article like i am 5 years old.', temperature: 0 },
+    { value: 'eli11', text: 'Like am 11 years old.', dataField: 'Explain briefly this article like i am 11 years old.', temperature: 0 },
     { value: 'keywords', text: 'Keywords', dataField: ' Extract keywords from this text.', temperature: 0.5 }
 ];
 
@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const gptModel = gptInput.value.trim();
         localStorage.setItem('GptModel', gptModel);
+        showNotificationMsg('msg-1');
         alert('GPT Model saved successfully');
     });
     
@@ -66,7 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const apiKey = apiKeyInput.value.trim();
         localStorage.setItem('ApiKey', apiKey);
+        showNotificationMsg('msg-1');
         alert('API Key saved successfully');
+         
     });
     
     console.log("from options page")
@@ -95,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const optionTemperature = parseFloat(optionTemperatureInput.value.trim());
         
         if (!optionValue || !optionText || !optionDataField || isNaN(optionTemperature)) {
+            showNotificationMsg('msg-4');
             alert('All fields are required');
             return;
         }
@@ -102,29 +106,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const index = savedDropdownOptions.findIndex(opt => opt.value === optionValue);
         if (index !== -1) {
             savedDropdownOptions[index] = {
-                value: optionValue,
-                text: optionText,
-                dataField: optionDataField,
-                temperature: optionTemperature
+            value: optionValue,
+            text: optionText,
+            dataField: optionDataField,
+            temperature: optionTemperature
             };
         } else {
             savedDropdownOptions.push({
-                value: optionValue,
-                text: optionText,
-                dataField: optionDataField,
-                temperature: optionTemperature
+            value: optionValue,
+            text: optionText,
+            dataField: optionDataField,
+            temperature: optionTemperature
             });
         }
         
         localStorage.setItem('dropdownOptions', JSON.stringify(savedDropdownOptions));
         populateDropdown(savedDropdownOptions);
+        showNotificationMsg('msg-1');
         alert('Option saved successfully');
         optionValueInput.value = '';
         optionTextInput.value = '';
         optionDataFieldInput.value = '';
         optionTemperatureInput.value = '';
     });
-
+    
     
     // Populate the dropdown
     function populateDropdown(dropdownOptions) {
@@ -149,13 +154,14 @@ document.addEventListener('DOMContentLoaded', () => {
             optionTemperatureInput.value = selectedOption.temperature; // Add this line
         }
     });
-
+    
     
     // Reset the dropdown to default values
     resetDropdown.addEventListener('click', () => {
         localStorage.removeItem('dropdownOptions');
         localStorage.setItem('dropdownOptions', JSON.stringify(defaultDropdownOptions));
         populateDropdown(defaultDropdownOptions);
+        showNotificationMsg('msg-2');
         alert('Options reset successfully');
     });
     
@@ -167,8 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
             savedDropdownOptions.splice(selectedOptionIndex, 1);
             localStorage.setItem('dropdownOptions', JSON.stringify(savedDropdownOptions));
             populateDropdown(savedDropdownOptions);
+            showNotificationMsg('msg-5');
             alert('Option deleted successfully');
         } else {
+            showNotificationMsg('msg-3');
             alert('Please select an option to delete');
         }
     });
@@ -201,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const languageText = languageTextInput.value.trim();
         
         if (!languageValue || !languageText) {
+            showNotificationMsg('msg-4');
             alert('All fields are required');
             return;
         }
@@ -214,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         localStorage.setItem('languages', JSON.stringify(savedLanguageOptions));
         populateLanguagesDropdown(savedLanguageOptions);
+        showNotificationMsg('msg-1');
         alert('Language saved successfully');
         languageValueInput.value = '';
         languageTextInput.value = '';
@@ -237,8 +247,10 @@ document.addEventListener('DOMContentLoaded', () => {
             savedLanguageOptions.splice(selectedLanguageIndex, 1);
             localStorage.setItem('languages', JSON.stringify(savedLanguageOptions));
             populateLanguagesDropdown(savedLanguageOptions);
+            showNotificationMsg('msg-5');
             alert('Language deleted successfully');
         } else {
+            showNotificationMsg('msg-3');
             alert('Please select a language to delete');
         }
     });
@@ -262,4 +274,15 @@ document.addEventListener('DOMContentLoaded', () => {
         populateLanguagesDropdown(defaultLanguageOptions);
         alert('Languages reset successfully');
     });
+    
+    
+    function showNotificationMsg(msgId) {
+      if (window.Notification && Notification.permission !== "granted") {
+        const savedMsg = document.getElementById(msgId);
+        savedMsg.classList.add('show-msg');
+        setTimeout(function() {
+          savedMsg.classList.remove('show-msg');
+        }, 500);
+      }
+    }
 });

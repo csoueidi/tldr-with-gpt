@@ -2,7 +2,7 @@
 
 **TL;DR with GPT** generates summaries of news articles and online content by leveraging GPT's capabilities. In addition to its use as a time-saving tool for quickly checking and reading online content without the need to go through extensive text, the extension can also be helpful for individuals who need to translate articles from different countries and languages. With options for customization in summary modes and multilingual support, it offers a time-saving solution for individuals who need to stay informed about current events and trending topics.
 
-The extension utilizes the [Readability](https://github.com/mozilla/readability) library  to extract content from web pages and then sends the extracted text to GPT for summarization. Currently, the extension is limited to processing around 1000 words due to GPT API limitations. However, future releases aim to improve this constraint by potentially sending content in multiple parts and aggregating the results, thereby providing a more comprehensive summary.
+The extension utilizes the [Readability](https://github.com/mozilla/readability) library  to extract content from web pages and then sends the extracted text to GPT for summarization. Currently, the extension is limited to processing around 1000 words due to GPT API limitations. However, future releases will improve this constraint by sending content in multiple parts and aggregating the results, thereby providing a more comprehensive summary.
  
 
 ## Screenshots

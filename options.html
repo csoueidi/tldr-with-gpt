@@ -28,9 +28,29 @@
                     .button {
                         cursor: pointer;
                     }
+                    
+                    .saved-msg {
+                      display: none;
+                      position: fixed;
+                      top: 50%;
+                      left: 50%;
+                      transform: translate(-50%, -50%);
+                      padding: 10px;
+                      border: 1px solid #ccc;
+                      background-color: #fff;
+                      z-index: 999;
+                      opacity: 0;
+                      transition: opacity 0.5s ease-in-out;
+                    }
+
+                    .show-msg {
+                      display: block;
+                      opacity: 1;
+                    }
                 </style>
                 <script type="module" src="options.js"></script>
     </head>
+
     <body>
         <h1 class="title">Edit Settings for TLDR</h1>
         <div class="box">
@@ -46,10 +66,16 @@
                             <input class="input" type="text" id="apiKey" name="apiKey">
                         </div>
                 </div>
-                <button class="button is-primary is-small" type="submit">Save API Key</button>
+                <button class="button is-primary is-small" data-msg-id="msg-1" type="submit">Save API Key</button>
+               
             </form>
         </div>
         
+        <div id="msg-1" class="saved-msg">Saved!</div>
+        <div id="msg-2" class="saved-msg">Reset Susccesfully!</div>
+        <div id="msg-3" class="saved-msg">Select an item!</div>
+        <div id="msg-4" class="saved-msg">All fields are required!</div>
+        <div id="msg-5" class="saved-msg">Deleted!</div>
         
         <div class="box">
             <h2 class="subtitle is-4 section-title">Summary Modes</h2>
@@ -92,11 +118,12 @@
                 </div>
                 
        
-                <button class="button is-primary is-small" type="submit">Add/Update Option</button>
+                <button class="button is-primary is-small"   data-msg-id="msg-2" type="submit">Add/Update Option</button>
                 
-                <button class="button is-danger is-small" type="button" id="deleteOption">Delete Option</button>
+                <button class="button is-danger is-small"  data-msg-id="msg-2" type="button" id="deleteOption">Delete Option</button>
                 
-                <button class="button is-warning is-small" type="button" id="resetDropdown">Reset Dropdown</button>
+                <button class="button is-warning is-small"  data-msg-id="msg-2" type="button" id="resetDropdown">Reset Dropdown</button>
+                <div id="msg-2" class="saved-msg">Saved!</div>
             </form>
         </div>
         
@@ -125,11 +152,14 @@
                         <input class="input" type="text" id="languageText" required>
                     </div>
                 </div>
-                <button class="button is-primary is-small" type="submit">Add/Update Language</button>
+                <button class="button is-primary is-small" data-msg-id="msg-3" type="submit">Add/Update Language</button>
                 
-                <button class="button is-danger is-small" type="button" id="deleteLanguage">Delete Language</button>
+                <button class="button is-danger is-small" data-msg-id="msg-3" type="button" id="deleteLanguage">Delete Language</button>
                 
-                <button class="button is-warning is-small" type="button" id="resetLanguages">Reset Languages</button>
+                <button class="button is-warning is-small" data-msg-id="msg-3" type="button" id="resetLanguages">Reset Languages</button>
+                
+                <div id="msg-3" class="saved-msg">Saved!</div>
+                
             </form>
         </div>
         
@@ -152,7 +182,8 @@
                             <input class="input" type="text" id="gptInput" name="gptInput">
                         </div>
                 </div>
-                <button class="button is-primary is-small" type="submit">Save Model</button>
+                <button class="button is-primary is-small" data-msg-id="msg-4" type="submit">Save Model</button>
+                <div id="msg-4" class="saved-msg">Saved!</div>
             </form>
         </div>
         

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summaries History</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .history-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            padding: 0.5em 0;
+        }
+        .url-col, .option-col, .language-col, .content-col, .action-col {
+            text-align: left;
+            overflow-wrap: break-word;
+        }
+        .url-col { min-width: 200px; max-width: 200px; }
+        .option-col { min-width: 100px; max-width: 100px; }
+        .language-col { min-width: 100px; max-width: 100px; }
+        .content-col { min-width: 500px; max-width: 500px; }
+        .action-col { min-width: 100px; max-width: 100px; }
+        .header-row {
+            font-weight: bold;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Extension History</h1>
+            <input class="input" type="text" id="searchInput" placeholder="Search by URL or content">
+            <div class="header-row history-row">
+                <div class="url-col">URL</div>
+                <div class="option-col">Option</div>
+                <div class="language-col">Language</div>
+                <div class="content-col">Content</div>
+                <div class="action-col"> </div>
+            </div>
+            <div id="historyContainer">
+                <!-- History rows will be added dynamically here -->
+            </div>
+        </div>
+    </section>
+    <script src="history.js"></script>
+</body>
+</html>

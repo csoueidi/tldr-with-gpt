@@ -36,6 +36,8 @@ function setSummaryText(text){
 
 function updateDropdownOptions() {
     
+    console.log(localStorage)
+    
     // Load and populate dropdown options from localStorage
     const savedDropdownOptions = JSON.parse(localStorage.getItem('dropdownOptions')) || [];
     populateDropdown(savedDropdownOptions);
@@ -93,13 +95,6 @@ function isEmpty(str) {
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    var count =  localStorage.getItem('count');
-    if(count){
-        localStorage.setItem('count', count + 1);
-    }else{
-        localStorage.setItem('count', 1);
-    }
-    
     updateDropdownOptions();
     
     
@@ -131,11 +126,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const openSettingsButton = document.getElementById('openSettings');
     
     openSettingsButton.addEventListener('click', () => {
-        api.runtime.openOptionsPage();
+        let opening = api.runtime.openOptionsPage();
+        opening.then(onOpened, onError);
+    });
+
+    const openHistoryButton = document.getElementById('openHistory');
+    
+    openHistoryButton.addEventListener('click', () => {
+        var url = api.runtime.getURL("history.html");
+
+        // create a new tab with the specified URL
+        api.tabs.create({ url: url });
     });
     
 });
 
+
+
+function onOpened() {
+    console.log(`Options page opened`);
+}
+
+function onError(error) {
+    console.log(`Error: ${error}`);
+}
 
 
 document.getElementById('extractText').addEventListener('click', async () => {
@@ -182,8 +196,6 @@ document.getElementById('extractText').addEventListener('click', async () => {
     var model= localStorage.getItem('GptModel');
     
     
-    const message = { type: 'getContext', content: '' };
-    
     const queryOptions = { active: true, currentWindow: true };
     api.tabs.query(queryOptions, (tabs) => {
         if (tabs.length > 0) {
@@ -210,15 +222,15 @@ document.getElementById('extractText').addEventListener('click', async () => {
                         case "gpt-4-32k-0314":
                         case "gpt-3.5-turbo":
                         case "gpt-3.5-turbo-0301":
-                            endpoint = "https://api.openai.com/v1/chat/completions";
-                            requestBody = {
-                                "model": model,
-                                "messages": [{"role": "user", "content": " " + option + language + " the following " + getLimitedWords(pageContent, 950)}],
-                                "temperature": temperature,
-                                
-                            };
-                            recent = true;
-                            break;
+                        endpoint = "https://api.openai.com/v1/chat/completions";
+                        requestBody = {
+                            "model": model,
+                            "messages": [{"role": "user", "content": " " + option + language + " the following " + getLimitedWords(pageContent, 950)}],
+                            "temperature": temperature,
+                            
+                        };
+                        recent = true;
+                        break;
                         case "text-davinci-003":
                         case "text-davinci-002":
                         case "text-curie-001":
@@ -228,29 +240,29 @@ document.getElementById('extractText').addEventListener('click', async () => {
                         case "curie":
                         case "babbage":
                         case "ada":
-                            endpoint = "https://api.openai.com/v1/completions";
-                            requestBody = {
-                                "model": model,
-                                "prompt": language + option + " the following " + getLimitedWords(pageContent, 950),
-                                "temperature": temperature,
-                                "n" : 1 ,
-                                "stop": "\n"
-                            };
-                            
-                            recent = false;
-                            break;
+                        endpoint = "https://api.openai.com/v1/completions";
+                        requestBody = {
+                            "model": model,
+                            "prompt": language + option + " the following " + getLimitedWords(pageContent, 950),
+                            "temperature": temperature,
+                            "n" : 1 ,
+                            "stop": "\n"
+                        };
+                        
+                        recent = false;
+                        break;
                         default:
-                            console.error("Unsupported model name:", model);
-                            return;
+                        console.error("Unsupported model name:", model);
+                        return;
                     }
                     
                     fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + key
-                    },
-                    body: JSON.stringify(requestBody)
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + key
+                        },
+                        body: JSON.stringify(requestBody)
                     })
                     .then(response => response.json())
                     .then(data => {
@@ -279,7 +291,7 @@ document.getElementById('extractText').addEventListener('click', async () => {
             });
         }
     });
-
+    
     
 });
 
